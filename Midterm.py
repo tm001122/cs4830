@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import Perceptron
+from sklearn.metrics import precision_score, recall_score
 
 # Load the dataset
 file_path = 'dataset.csv'
@@ -10,7 +11,7 @@ data = pd.read_csv(file_path)
 mutation_columns = data.columns[1:]
 
 # Remove rows with more than 6 mutations
-data = data[(data[mutation_columns] <= 5).all(axis=1)]
+data = data[(data[mutation_columns] <= 6).all(axis=1)]
 
 # Add a target column to label the data
 data['target'] = data['Unnamed: 0'].apply(lambda x: 'brca' if 'brca' in x else ('prad' if 'prad' in x else ('luad' if 'luad' in x else 'unknown')))
@@ -21,7 +22,7 @@ prad_data = data[data['Unnamed: 0'].str.contains('prad', na=False)]
 luad_data = data[data['Unnamed: 0'].str.contains('luad', na=False)]
 
 # Sample number of rows from each type of cancer data
-number_of_each = 300 # max is 493 for lung cancer
+number_of_each = 450 # max is 493 for lung cancer
 br_sample = br_data.sample(n=number_of_each, random_state=1)
 prad_sample = prad_data.sample(n=number_of_each, random_state=1)
 luad_sample = luad_data.sample(n=number_of_each, random_state=1)
@@ -74,6 +75,14 @@ y_pred = best_perc.predict(X_test)
 # Calculate the accuracy
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy of the best perceptron model: {accuracy*100}")
+
+# Calculate precision
+precision = precision_score(y_test, y_pred, average='weighted')
+print(f"Precision of the best perceptron model: {precision*100}")
+
+# Calculate recall
+recall = recall_score(y_test, y_pred, average='weighted')
+print(f"Recall of the best perceptron model: {recall*100}")
 
 # Print the best parameters
 print("Best parameters found by grid search:")
