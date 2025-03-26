@@ -31,14 +31,9 @@ results = []
 # Perform hierarchical clustering for different parameters
 for n_clusters in n_clusters_list:
     for linkage in linkage_methods:
-        # Skip incompatible combinations (e.g., 'ward' only works with 'euclidean')
-        if linkage == 'ward':
-            metric = 'euclidean'
-        else:
-            metric = 'euclidean'  # You can test other metrics like 'manhattan' if needed
-
+        
         # Perform clustering
-        clustering = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage, metric=metric)
+        clustering = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage, metric='euclidean')
         labels = clustering.fit_predict(X)
 
         # Evaluate clustering
