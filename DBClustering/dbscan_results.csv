@@ -1,0 +1,2 @@
+eps,min_samples,Silhouette Score,Calinski-Harabasz Score,Davies-Bouldin Index,Rand Index,Adjusted Rand Index,Mutual Information,Normalized Mutual Information
+10,2,-0.49550041325898636,1.3768973369941901,8.675272219221116,0.47533973613208247,-0.07579837948119894,0.05719508914967354,0.10353444975767735
